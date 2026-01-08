@@ -34,15 +34,15 @@ namespace Exceptions
     inline string requestId() const { DARABONBA_PTR_GET_DEFAULT(requestId_, "") };
   protected:
     // HTTP Status Code
-    std::shared_ptr<int64_t> statusCode_ = nullptr;
+    shared_ptr<int64_t> statusCode_ {};
     // Error Code
-    std::shared_ptr<string> code_ = nullptr;
+    shared_ptr<string> code_ {};
     // Error Message
-    std::shared_ptr<string> message_ = nullptr;
+    shared_ptr<string> message_ {};
     // Error Description
-    std::shared_ptr<string> description_ = nullptr;
+    shared_ptr<string> description_ {};
     // Request ID
-    std::shared_ptr<string> requestId_ = nullptr;
+    shared_ptr<string> requestId_ {};
   };
   
   } // namespace Exceptions

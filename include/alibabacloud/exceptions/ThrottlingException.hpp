@@ -25,7 +25,7 @@ namespace Exceptions
     inline int64_t retryAfter() const { DARABONBA_PTR_GET_DEFAULT(retryAfter_, 0L) };
   protected:
     // Retry After(ms)
-    std::shared_ptr<int64_t> retryAfter_ = nullptr;
+    shared_ptr<int64_t> retryAfter_ {};
   };
   
   } // namespace Exceptions

@@ -24,6 +24,10 @@ namespace AlibabaCloud {
 
         AttributeMap(AttributeMap &&) = default;
 
+        AttributeMap &operator=(const AttributeMap &) = default;
+
+        AttributeMap &operator=(AttributeMap &&) = default;
+
         AttributeMap(const Darabonba::Json &obj) { from_json(obj, *this); }
 
         virtual ~AttributeMap() = default;

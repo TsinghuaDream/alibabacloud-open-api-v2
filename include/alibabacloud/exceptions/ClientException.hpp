@@ -26,7 +26,7 @@ namespace Exceptions
     inline Darabonba::Json & accessDeniedDetail() { DARABONBA_GET(accessDeniedDetail_) };
   protected:
     // Access Denied Detail
-    Darabonba::Json accessDeniedDetail_ = nullptr;
+    Darabonba::Json accessDeniedDetail_ {};
   };
   
   } // namespace Exceptions

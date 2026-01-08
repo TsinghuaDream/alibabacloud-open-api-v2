@@ -39,8 +39,8 @@ namespace Models
     // headers Field Functions 
     bool hasHeaders() const { return this->headers_ != nullptr;};
     void deleteHeaders() { this->headers_ = nullptr;};
-    inline const map<string, string> & headers() const { DARABONBA_PTR_GET_CONST(headers_, map<string, string>) };
-    inline map<string, string> headers() { DARABONBA_PTR_GET(headers_, map<string, string>) };
+    inline const map<string, string> & getHeaders() const { DARABONBA_PTR_GET_CONST(headers_, map<string, string>) };
+    inline map<string, string> getHeaders() { DARABONBA_PTR_GET(headers_, map<string, string>) };
     inline GlobalParameters& setHeaders(const map<string, string> & headers) { DARABONBA_PTR_SET_VALUE(headers_, headers) };
     inline GlobalParameters& setHeaders(map<string, string> && headers) { DARABONBA_PTR_SET_RVALUE(headers_, headers) };
 
@@ -48,15 +48,15 @@ namespace Models
     // queries Field Functions 
     bool hasQueries() const { return this->queries_ != nullptr;};
     void deleteQueries() { this->queries_ = nullptr;};
-    inline const map<string, string> & queries() const { DARABONBA_PTR_GET_CONST(queries_, map<string, string>) };
-    inline map<string, string> queries() { DARABONBA_PTR_GET(queries_, map<string, string>) };
+    inline const map<string, string> & getQueries() const { DARABONBA_PTR_GET_CONST(queries_, map<string, string>) };
+    inline map<string, string> getQueries() { DARABONBA_PTR_GET(queries_, map<string, string>) };
     inline GlobalParameters& setQueries(const map<string, string> & queries) { DARABONBA_PTR_SET_VALUE(queries_, queries) };
     inline GlobalParameters& setQueries(map<string, string> && queries) { DARABONBA_PTR_SET_RVALUE(queries_, queries) };
 
 
   protected:
-    std::shared_ptr<map<string, string>> headers_ = nullptr;
-    std::shared_ptr<map<string, string>> queries_ = nullptr;
+    shared_ptr<map<string, string>> headers_ {};
+    shared_ptr<map<string, string>> queries_ {};
   };
 
   } // namespace Models

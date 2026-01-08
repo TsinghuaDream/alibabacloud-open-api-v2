@@ -2,6 +2,6 @@
 #ifndef ALIBABACLOUD_OPENAPIMODEL_HPP_
 #define ALIBABACLOUD_OPENAPIMODEL_HPP_
 #include <darabonba/Core.hpp>
-#include <alibabacloud/models/Sseresponse.hpp>
+#include <alibabacloud/models/SSEResponse.hpp>
 
 #endif

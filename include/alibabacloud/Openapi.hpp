@@ -155,6 +155,8 @@ namespace OpenApi
       Darabonba::Policy::RetryOptions _retryOptions;
 
       string _tlsMinVersion;
+
+      AlibabaCloud::Gateway::Models::AttributeMap _attributeMap;
   };
 } // namespace AlibabaCloud
 } // namespace OpenApi

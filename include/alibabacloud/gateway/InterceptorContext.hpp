@@ -98,7 +98,7 @@ namespace AlibabaCloud {
 
         bool hasAction() const { return this->action_ != nullptr; }
 
-        std::string action() const { DARABONBA_PTR_GET_DEFAULT(action_, ""); }
+        std::string getAction() const { DARABONBA_PTR_GET_DEFAULT(action_, ""); }
 
         InterceptorContextRequest &setAction(const std::string &action) {
           DARABONBA_PTR_SET_VALUE(action_, action);
@@ -110,7 +110,7 @@ namespace AlibabaCloud {
 
         bool hasAuthType() const { return this->authType_ != nullptr; }
 
-        std::string authType() const { DARABONBA_PTR_GET_DEFAULT(authType_, ""); }
+        std::string getAuthType() const { DARABONBA_PTR_GET_DEFAULT(authType_, ""); }
 
         InterceptorContextRequest &setAuthType(const std::string &authType) {
           DARABONBA_PTR_SET_VALUE(authType_, authType);
@@ -122,7 +122,7 @@ namespace AlibabaCloud {
 
         bool hasBodyType() const { return this->bodyType_ != nullptr; }
 
-        std::string bodyType() const { DARABONBA_PTR_GET_DEFAULT(bodyType_, ""); }
+        std::string getBodyType() const { DARABONBA_PTR_GET_DEFAULT(bodyType_, ""); }
 
         InterceptorContextRequest &setBodyType(const std::string &bodyType) {
           DARABONBA_PTR_SET_VALUE(bodyType_, bodyType);
@@ -134,9 +134,9 @@ namespace AlibabaCloud {
 
         bool hasBody() const { return this->body_ != nullptr; }
 
-        const Darabonba::Json &body() const { DARABONBA_GET(body_); }
+        const Darabonba::Json &getBody() const { DARABONBA_GET(body_); }
 
-        Darabonba::Json &body() { DARABONBA_GET(body_); }
+        Darabonba::Json &getBody() { DARABONBA_GET(body_); }
 
         InterceptorContextRequest &setBody(const Darabonba::Json &body) {
           DARABONBA_SET_VALUE(body_, body);
@@ -148,11 +148,11 @@ namespace AlibabaCloud {
 
         bool hasCredential() const { return this->credential_ != nullptr; }
 
-        const std::shared_ptr<Credential::Client> &credential() const {
+        const std::shared_ptr<Credential::Client> &getCredential() const {
           DARABONBA_GET(credential_);
         }
 
-        std::shared_ptr<Credential::Client> &credential() { DARABONBA_GET(credential_); }
+        std::shared_ptr<Credential::Client> &getCredential() { DARABONBA_GET(credential_); }
 
         InterceptorContextRequest &setCredential(const Credential::Client &credential) {
           DARABONBA_PTR_SET_VALUE(credential_, credential);
@@ -164,11 +164,11 @@ namespace AlibabaCloud {
 
         bool hasHeaders() const { return this->headers_ != nullptr; }
 
-        const Darabonba::Http::Header &headers() const {
+        const Darabonba::Http::Header &getHeaders() const {
           DARABONBA_PTR_GET(headers_, Darabonba::Http::Header);
         }
 
-        Darabonba::Http::Header headers() { DARABONBA_PTR_GET(headers_, Darabonba::Http::Header); }
+        Darabonba::Http::Header getHeaders() { DARABONBA_PTR_GET(headers_, Darabonba::Http::Header); }
 
         InterceptorContextRequest &setHeaders(const Darabonba::Http::Header &headers) {
           DARABONBA_PTR_SET_VALUE(headers_, headers);
@@ -180,11 +180,11 @@ namespace AlibabaCloud {
 
         bool hasHostMap() const { return this->hostMap_ != nullptr; }
 
-        const std::map<std::string, std::string> &hostMap() const {
+        const std::map<std::string, std::string> &getHostMap() const {
           DARABONBA_PTR_GET(hostMap_, std::map<std::string, std::string>);
         }
 
-        std::map<std::string, std::string> hostMap() {
+        std::map<std::string, std::string> getHostMap() {
           DARABONBA_PTR_GET(hostMap_, std::map<std::string, std::string>);
         }
 
@@ -198,7 +198,7 @@ namespace AlibabaCloud {
 
         bool hasMethod() const { return this->method_ != nullptr; }
 
-        std::string method() const { DARABONBA_PTR_GET_DEFAULT(method_, ""); }
+        std::string getMethod() const { DARABONBA_PTR_GET_DEFAULT(method_, ""); }
 
         InterceptorContextRequest &setMethod(const std::string &method) {
           DARABONBA_PTR_SET_VALUE(method_, method);
@@ -210,7 +210,7 @@ namespace AlibabaCloud {
 
         bool hasPathname() const { return this->pathname_ != nullptr; }
 
-        std::string pathname() const { DARABONBA_PTR_GET_DEFAULT(pathname_, ""); }
+        std::string getPathname() const { DARABONBA_PTR_GET_DEFAULT(pathname_, ""); }
 
         InterceptorContextRequest &setPathname(const std::string &pathname) {
           DARABONBA_PTR_SET_VALUE(pathname_, pathname);
@@ -222,7 +222,7 @@ namespace AlibabaCloud {
 
         bool hasProductId() const { return this->productId_ != nullptr; }
 
-        std::string productId() const { DARABONBA_PTR_GET_DEFAULT(productId_, ""); }
+        std::string getProductId() const { DARABONBA_PTR_GET_DEFAULT(productId_, ""); }
 
         InterceptorContextRequest &setProductId(const std::string &productId) {
           DARABONBA_PTR_SET_VALUE(productId_, productId);
@@ -234,7 +234,7 @@ namespace AlibabaCloud {
 
         bool hasProtocol() const { return this->protocol_ != nullptr; }
 
-        std::string protocol() const { DARABONBA_PTR_GET_DEFAULT(protocol_, ""); }
+        std::string getProtocol() const { DARABONBA_PTR_GET_DEFAULT(protocol_, ""); }
 
         InterceptorContextRequest &setProtocol(const std::string &protocol) {
           DARABONBA_PTR_SET_VALUE(protocol_, protocol);
@@ -246,9 +246,9 @@ namespace AlibabaCloud {
 
         bool hasQuery() const { return this->query_ != nullptr; }
 
-        const Darabonba::Http::Query &query() const { DARABONBA_PTR_GET(query_, Darabonba::Http::Query); }
+        const Darabonba::Http::Query &getQuery() const { DARABONBA_PTR_GET(query_, Darabonba::Http::Query); }
 
-        Darabonba::Http::Query query() { DARABONBA_PTR_GET(query_, Darabonba::Http::Query); }
+        Darabonba::Http::Query getQuery() { DARABONBA_PTR_GET(query_, Darabonba::Http::Query); }
 
         InterceptorContextRequest &setQuery(const Darabonba::Http::Query &query) {
           DARABONBA_PTR_SET_VALUE(query_, query);
@@ -260,7 +260,7 @@ namespace AlibabaCloud {
 
         bool hasReqBodyType() const { return this->reqBodyType_ != nullptr; }
 
-        std::string reqBodyType() const {
+        std::string getReqBodyType() const {
           DARABONBA_PTR_GET_DEFAULT(reqBodyType_, "");
         }
 
@@ -276,7 +276,7 @@ namespace AlibabaCloud {
           return this->signatureAlgorithm_ != nullptr;
         }
 
-        std::string signatureAlgorithm() const {
+        std::string getSignatureAlgorithm() const {
           DARABONBA_PTR_GET_DEFAULT(signatureAlgorithm_, "");
         }
 
@@ -292,7 +292,7 @@ namespace AlibabaCloud {
           return this->signatureVersion_ != nullptr;
         }
 
-        std::string signatureVersion() const {
+        std::string getSignatureVersion() const {
           DARABONBA_PTR_GET_DEFAULT(signatureVersion_, "");
         }
 
@@ -306,7 +306,7 @@ namespace AlibabaCloud {
 
         bool hasStream() const { return this->stream_ != nullptr; }
 
-        std::shared_ptr<Darabonba::IStream> stream() const {
+        std::shared_ptr<Darabonba::IStream> getStream() const {
           DARABONBA_GET(stream_);
         }
 
@@ -316,7 +316,7 @@ namespace AlibabaCloud {
 
         bool hasStyle() const { return this->style_ != nullptr; }
 
-        std::string style() const { DARABONBA_PTR_GET_DEFAULT(style_, ""); }
+        std::string getStyle() const { DARABONBA_PTR_GET_DEFAULT(style_, ""); }
 
         InterceptorContextRequest &setStyle(const std::string &style) {
           DARABONBA_PTR_SET_VALUE(style_, style);
@@ -328,7 +328,7 @@ namespace AlibabaCloud {
 
         bool hasUserAgent() const { return this->userAgent_ != nullptr; }
 
-        std::string userAgent() const { DARABONBA_PTR_GET_DEFAULT(userAgent_, ""); }
+        std::string getUserAgent() const { DARABONBA_PTR_GET_DEFAULT(userAgent_, ""); }
 
         InterceptorContextRequest &setUserAgent(const std::string &userAgent) {
           DARABONBA_PTR_SET_VALUE(userAgent_, userAgent);
@@ -340,7 +340,7 @@ namespace AlibabaCloud {
 
         bool hasVersion() const { return this->version_ != nullptr; }
 
-        std::string version() const { DARABONBA_PTR_GET_DEFAULT(version_, ""); }
+        std::string getVersion() const { DARABONBA_PTR_GET_DEFAULT(version_, ""); }
 
         InterceptorContextRequest &setVersion(const std::string &version) {
           DARABONBA_PTR_SET_VALUE(version_, version);
@@ -429,11 +429,11 @@ namespace AlibabaCloud {
 
         bool hasEndpointMap() const { return this->endpointMap_ != nullptr; }
 
-        const std::map<std::string, std::string> &endpointMap() const {
+        const std::map<std::string, std::string> &getEndpointMap() const {
           DARABONBA_PTR_GET(endpointMap_, std::map<std::string, std::string>);
         }
 
-        std::map<std::string, std::string> endpointMap() {
+        std::map<std::string, std::string> getEndpointMap() {
           DARABONBA_PTR_GET(endpointMap_, std::map<std::string, std::string>);
         }
 
@@ -449,7 +449,7 @@ namespace AlibabaCloud {
 
         bool hasEndpointRule() const { return this->endpointRule_ != nullptr; }
 
-        std::string endpointRule() const {
+        std::string getEndpointRule() const {
           DARABONBA_PTR_GET_DEFAULT(endpointRule_, "");
         }
 
@@ -463,7 +463,7 @@ namespace AlibabaCloud {
 
         bool hasEndpointType() const { return this->endpointType_ != nullptr; }
 
-        std::string endpointType() const {
+        std::string getEndpointType() const {
           DARABONBA_PTR_GET_DEFAULT(endpointType_, "");
         }
 
@@ -477,7 +477,7 @@ namespace AlibabaCloud {
 
         bool hasEndpoint() const { return this->endpoint_ != nullptr; }
 
-        std::string endpoint() const { DARABONBA_PTR_GET_DEFAULT(endpoint_, ""); }
+        std::string getEndpoint() const { DARABONBA_PTR_GET_DEFAULT(endpoint_, ""); }
 
         InterceptorContextConfiguration &setEndpoint(const std::string &endpoint) {
           DARABONBA_PTR_SET_VALUE(endpoint_, endpoint);
@@ -489,7 +489,7 @@ namespace AlibabaCloud {
 
         bool hasNetwork() const { return this->network_ != nullptr; }
 
-        std::string network() const { DARABONBA_PTR_GET_DEFAULT(network_, ""); }
+        std::string getNetwork() const { DARABONBA_PTR_GET_DEFAULT(network_, ""); }
 
         InterceptorContextConfiguration &setNetwork(const std::string &network) {
           DARABONBA_PTR_SET_VALUE(network_, network);
@@ -501,7 +501,7 @@ namespace AlibabaCloud {
 
         bool hasRegionId() const { return this->regionId_ != nullptr; }
 
-        std::string regionId() const { DARABONBA_PTR_GET_DEFAULT(regionId_, ""); }
+        std::string getRegionId() const { DARABONBA_PTR_GET_DEFAULT(regionId_, ""); }
 
         InterceptorContextConfiguration &setRegionId(const std::string &regionId) {
           DARABONBA_PTR_SET_VALUE(regionId_, regionId);
@@ -513,7 +513,7 @@ namespace AlibabaCloud {
 
         bool hasSuffix() const { return this->suffix_ != nullptr; }
 
-        std::string suffix() const { DARABONBA_PTR_GET_DEFAULT(suffix_, ""); }
+        std::string getSuffix() const { DARABONBA_PTR_GET_DEFAULT(suffix_, ""); }
 
         InterceptorContextConfiguration &setSuffix(const std::string &suffix) {
           DARABONBA_PTR_SET_VALUE(suffix_, suffix);
@@ -583,7 +583,7 @@ namespace AlibabaCloud {
 
         bool hasBody() const { return this->body_ != nullptr; }
 
-        std::shared_ptr<Darabonba::IStream> body() const {
+        std::shared_ptr<Darabonba::IStream> getBody() const {
           DARABONBA_GET(body_);
         }
 
@@ -596,12 +596,12 @@ namespace AlibabaCloud {
           return this->deserializedBody_ != nullptr;
         }
 
-        const std::shared_ptr<Darabonba::IStream> &deserializedBody() const {
+        const std::shared_ptr<Darabonba::IStream> &getDeserializedBody() const {
           DARABONBA_GET(deserializedBody_);
         }
 
-        inline const Darabonba::Json &deserializedBody() { DARABONBA_GET(deserializedBody_); }
-        Darabonba::Json & body() { DARABONBA_GET(deserializedBody_) };
+        inline const Darabonba::Json &getDeserializedBody() { DARABONBA_GET(deserializedBody_); }
+        Darabonba::Json & getBody() { DARABONBA_GET(deserializedBody_) };
 
         InterceptorContextResponse &setDeserializedBody(const Darabonba::Json &deserializedBody) {
           DARABONBA_SET_VALUE(deserializedBody_, deserializedBody);
@@ -617,7 +617,7 @@ namespace AlibabaCloud {
           DARABONBA_PTR_GET(headers_, Darabonba::Http::Header);
         }
 
-        Darabonba::Http::Header headers() { DARABONBA_PTR_GET(headers_, Darabonba::Http::Header); }
+        Darabonba::Http::Header getHeaders() { DARABONBA_PTR_GET(headers_, Darabonba::Http::Header); }
 
         InterceptorContextResponse &setHeaders(const Darabonba::Http::Header &headers) {
           DARABONBA_PTR_SET_VALUE(headers_, headers);
@@ -629,7 +629,7 @@ namespace AlibabaCloud {
 
         bool hasStatusCode() const { return this->statusCode_ != nullptr; }
 
-        int64_t statusCode() const { DARABONBA_PTR_GET_DEFAULT(statusCode_, 0); }
+        int64_t getStatusCode() const { DARABONBA_PTR_GET_DEFAULT(statusCode_, 0); }
 
         InterceptorContextResponse &setStatusCode(int64_t statusCode) {
           DARABONBA_PTR_SET_VALUE(statusCode_, statusCode);
@@ -688,11 +688,11 @@ namespace AlibabaCloud {
 
         bool hasInterceptorContextConfiguration() const { return this->configuration_ != nullptr; }
 
-        const InterceptorContextConfiguration &configuration() const {
+        const InterceptorContextConfiguration &getConfiguration() const {
           DARABONBA_PTR_GET(configuration_, InterceptorContextConfiguration);
         }
 
-        InterceptorContextConfiguration configuration() { DARABONBA_PTR_GET(configuration_, InterceptorContextConfiguration); }
+        InterceptorContextConfiguration getConfiguration() { DARABONBA_PTR_GET(configuration_, InterceptorContextConfiguration); }
 
         InterceptorContext &setInterceptorContextConfiguration(const InterceptorContextConfiguration &configuration) {
           DARABONBA_PTR_SET_VALUE(configuration_, configuration);
@@ -704,9 +704,9 @@ namespace AlibabaCloud {
 
         bool hasInterceptorContextRequest() const { return this->request_ != nullptr; }
 
-        const InterceptorContextRequest &request() const { DARABONBA_PTR_GET(request_, InterceptorContextRequest); }
+        const InterceptorContextRequest &getRequest() const { DARABONBA_PTR_GET(request_, InterceptorContextRequest); }
 
-        InterceptorContextRequest request() { DARABONBA_PTR_GET(request_, InterceptorContextRequest); }
+        InterceptorContextRequest getRequest() { DARABONBA_PTR_GET(request_, InterceptorContextRequest); }
 
         InterceptorContext &setRequest(const InterceptorContextRequest &request) {
           DARABONBA_PTR_SET_VALUE(request_, request);
@@ -718,9 +718,9 @@ namespace AlibabaCloud {
 
         bool hasResponse() const { return this->response_ != nullptr; }
 
-        const InterceptorContextResponse &response() const { DARABONBA_PTR_GET(response_, InterceptorContextResponse); }
+        const InterceptorContextResponse &getResponse() const { DARABONBA_PTR_GET(response_, InterceptorContextResponse); }
 
-        InterceptorContextResponse response() { DARABONBA_PTR_GET(response_, InterceptorContextResponse); }
+        InterceptorContextResponse getResponse() { DARABONBA_PTR_GET(response_, InterceptorContextResponse); }
 
         InterceptorContext &setResponse(const InterceptorContextResponse &response) {
           DARABONBA_PTR_SET_VALUE(response_, response);

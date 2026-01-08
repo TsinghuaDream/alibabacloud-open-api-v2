@@ -2,9 +2,10 @@
 #ifndef ALIBABACLOUD_UTILS_HPP_
 #define ALIBABACLOUD_UTILS_HPP_
 #include <darabonba/Core.hpp>
-#include <darabonba/encode/Encoder.hpp>
 #include <alibabacloud/UtilsModel.hpp>
+#include <darabonba/Model.hpp>
 #include <map>
+#include <darabonba/http/Request.hpp>
 using namespace std;
 using json = nlohmann::json;
 namespace AlibabaCloud
@@ -22,7 +23,17 @@ namespace Utils
        * @param content target Model
        * @return void
        */
-      static void convert(const Darabonba::Model &body, Darabonba::Model &content);
+      static void convert(const Darabonba::Model &body, const Darabonba::Model &content);
+
+      /**
+       * If endpointType is internal, use internal endpoint
+       * If serverUse is true and endpointType is accelerate, use accelerate endpoint
+       * Default return endpoint
+       * @param serverUse whether use accelerate endpoint
+       * @param endpointType value must be internal or accelerate
+       * @return the final endpoint
+       */
+      static string getEndpoint(const string &endpoint, const bool &serverUse, const string &endpointType);
 
       /**
        * Get throttling param
@@ -37,31 +48,27 @@ namespace Utils
        * @param signatureAlgorithm the autograph method
        * @return hashed bytes
        */
-      static Darabonba::Bytes hash(const Darabonba::Bytes &raw,
-                                   const string &signatureAlgorithm) {
-        if (signatureAlgorithm.empty())
-          return {};
-        if (signatureAlgorithm == "ACS3-HMAC-SHA256" ||
-            signatureAlgorithm == "ACS3-RSA-SHA256") {
-          return Darabonba::Encode::SHA256::hash(raw);
-        } else if (signatureAlgorithm == "ACS3-HMAC-SM3") {
-          return Darabonba::Encode::SM3::hash(raw);
-        }
-        return {};
-      };
+      static Darabonba::Bytes hash(const Darabonba::Bytes &raw, const string &signatureAlgorithm);
+
+      /**
+       * Get throttling param
+       * @param the response headers
+       * @return time left
+       */
+      static map<string, string> flatMap(const json &params, const string &prefix);
 
       /**
        * Generate a nonce string
        * @return the nonce string
        */
-      inline static string getNonce() { return Darabonba::Core::uuid(); };
+      static string getNonce();
 
       /**
        * Get the string to be signed according to request
-       * @param req  which contains signed messages
+       * @param request  which contains signed messages
        * @return the signed string
        */
-      static string getStringToSign(const Darabonba::Http::Request &req);
+      static string getStringToSign(const Darabonba::Http::Request &request);
 
       /**
        * Get signature according to stringToSign, secret
@@ -69,7 +76,7 @@ namespace Utils
        * @param secret accesskey secret
        * @return the signature
        */
-      static string getROASignature(string &stringToSign, string &secret);
+      static string getROASignature(const string &stringToSign, const string &secret);
 
       /**
        * Parse filter into a form string
@@ -82,12 +89,7 @@ namespace Utils
        * Get timestamp
        * @return the timestamp string
        */
-      static string getTimestamp() {
-        char buf[80];
-        time_t t = time(nullptr);
-        strftime(buf, sizeof buf, "%Y-%m-%dT%H:%M:%SZ", gmtime(&t));
-        return buf;
-      }
+      static string getTimestamp();
 
       /**
        * Get UTC string
@@ -124,12 +126,12 @@ namespace Utils
        * Stringify the value of map
        * @return the new stringified map
        */
-      static map<string, string> stringifyMapValue(json &m);
+      static map<string, string> stringifyMapValue(const json &m);
 
       /**
        * Transform input as array.
        */
-      static vector<map<string, Darabonba::Json>> toArray(const Darabonba::Json &input);
+      static vector<json> toArray(const Darabonba::Json &input);
 
       /**
        * Parse map with flat style
@@ -137,103 +139,33 @@ namespace Utils
        * @param any the input
        * @return any
        */
-      static Darabonba::Json mapToFlatStyle(Darabonba::Json &input);
+      static Darabonba::Json mapToFlatStyle(const Darabonba::Json &input);
 
       /**
        * Transform input as map.
        */
-      static Darabonba::Json parseToMap(Darabonba::Json &input) {
-        return input;
-      };
-
-      static std::string hexEncode(const Darabonba::Bytes &raw) {
-        return Darabonba::Encode::Encoder::hexEncode(raw);
-      }
-
-      static string getEncodePath(const string &path) {
-        return Darabonba::Encode::Encoder::pathEncode(path);
-      }
-
-      static string getEncodeParam(const string &param) {
-        return Darabonba::Encode::Encoder::percentEncode(param);
-      }
+      static json parseToMap(const Darabonba::Json &input);
 
       /**
        * Get the authorization 
-       * @param req request params
+       * @param request request params
        * @param signatureAlgorithm the autograph method
        * @param payload the hashed request
        * @param accesskey the accesskey string
        * @param accessKeySecret the accessKeySecret string
        * @return authorization string
        */
-      static string getAuthorization(const Darabonba::Http::Request &request,
-                                     const string &signatureAlgorithm,
-                                     const string &payload,
-                                     const string &accessKey,
-                                     const string &accessKeySecret);
+      static string getAuthorization(const Darabonba::Http::Request &request, const string &signatureAlgorithm, const string &payload, const string &accesskey, const string &accessKeySecret);
 
       static string getUserAgent(const string &userAgent);
 
-      static std::string getEndpointRules(const std::string &product,
-                                          const std::string &regionId,
-                                          const std::string &endpointType,
-                                          const std::string &network,
-                                          const std::string &suffix);
-
-      static Darabonba::Bytes signatureMethod(const std::string &stringToSign,
-                                              const std::string &secret,
-                                              const std::string &signAlgorithm);
-
       /**
-       * If endpointType is internal, use internal endpoint
-       * If serverUse is true and endpointType is accelerate, use accelerate endpoint
-       * Default return endpoint
-       * @param endpoint endpoint
-       * @param useAccelerate whether use accelerate endpoint
-       * @param endpointType value must be internal or accelerate
-       * @return the final endpoint
+       * Get endpoint according to productId, regionId, endpointType, network and suffix
+       * @return endpoint
        */
-      static string getEndpoint(const string &endpoint,
-        bool useAccelerate,
-        const string &endpointType) {
-        if (useAccelerate && endpointType == "accelerate")
-          return "oss-accelerate.aliyuncs.com";
-        auto ret = endpoint;
-        if (endpointType == "internal") {
-          auto pos = endpoint.find('.');
-          if (pos != string::npos) {
-            ret.replace(pos, 1, "-internal.");
-          }
-        }
-        return ret;
-      };
-  protected:
-    static pair<string, string>
-    getCanonicalHeadersPair(const Darabonba::Http::Header &headers);
-
-    static string
-    getCanonicalHeaders(const Darabonba::Http::Header &headers);
-
-    static string
-    getCanonicalResource(const string &path,
-                         const map<string, string> &query);
-
-    static void processObject(const Darabonba::Json &obj, string key,
-                              map<string, string> &out);
-
-    static int64_t getTimeLeft(const map<string, string>& headers, const string& key);
-
-    static void exceptStream(json &data);
-
-    template <typename T>
-    static bool isStreamPtr(uintptr_t ptr_value) {
-      auto ptr = reinterpret_cast<std::shared_ptr<T>*>(ptr_value);
-      return ptr && dynamic_cast<T*>(ptr->get());
-    }
+      static string getEndpointRules(const string &product, const string &regionId, const string &endpointType, const string &network, const string &suffix);
   };
-
-} // namespace Alibabacloud
+} // namespace AlibabaCloud
 } // namespace OpenApi
 } // namespace Utils
 #endif

@@ -43,8 +43,8 @@ namespace Models
     // headers Field Functions 
     bool hasHeaders() const { return this->headers_ != nullptr;};
     void deleteHeaders() { this->headers_ = nullptr;};
-    inline const map<string, string> & headers() const { DARABONBA_PTR_GET_CONST(headers_, map<string, string>) };
-    inline map<string, string> headers() { DARABONBA_PTR_GET(headers_, map<string, string>) };
+    inline const map<string, string> & getHeaders() const { DARABONBA_PTR_GET_CONST(headers_, map<string, string>) };
+    inline map<string, string> getHeaders() { DARABONBA_PTR_GET(headers_, map<string, string>) };
     inline SSEResponse& setHeaders(const map<string, string> & headers) { DARABONBA_PTR_SET_VALUE(headers_, headers) };
     inline SSEResponse& setHeaders(map<string, string> && headers) { DARABONBA_PTR_SET_RVALUE(headers_, headers) };
 
@@ -52,24 +52,24 @@ namespace Models
     // statusCode Field Functions 
     bool hasStatusCode() const { return this->statusCode_ != nullptr;};
     void deleteStatusCode() { this->statusCode_ = nullptr;};
-    inline int64_t statusCode() const { DARABONBA_PTR_GET_DEFAULT(statusCode_, 0) };
+    inline int64_t getStatusCode() const { DARABONBA_PTR_GET_DEFAULT(statusCode_, 0) };
     inline SSEResponse& setStatusCode(int64_t statusCode) { DARABONBA_PTR_SET_VALUE(statusCode_, statusCode) };
 
 
     // event Field Functions 
     bool hasEvent() const { return this->event_ != nullptr;};
     void deleteEvent() { this->event_ = nullptr;};
-    inline const Darabonba::Http::SSEEvent & event() const { DARABONBA_PTR_GET_CONST(event_, Darabonba::Http::SSEEvent) };
-    inline Darabonba::Http::SSEEvent event() { DARABONBA_PTR_GET(event_, Darabonba::Http::SSEEvent) };
+    inline const Darabonba::Http::SSEEvent & getEvent() const { DARABONBA_PTR_GET_CONST(event_, Darabonba::Http::SSEEvent) };
+    inline Darabonba::Http::SSEEvent getEvent() { DARABONBA_PTR_GET(event_, Darabonba::Http::SSEEvent) };
     inline SSEResponse& setEvent(const Darabonba::Http::SSEEvent & event) { DARABONBA_PTR_SET_VALUE(event_, event) };
     inline SSEResponse& setEvent(Darabonba::Http::SSEEvent && event) { DARABONBA_PTR_SET_RVALUE(event_, event) };
 
 
   protected:
-    std::shared_ptr<map<string, string>> headers_ = nullptr;
+    shared_ptr<map<string, string>> headers_ {};
     // HTTP Status Code
-    std::shared_ptr<int64_t> statusCode_ = nullptr;
-    std::shared_ptr<Darabonba::Http::SSEEvent> event_ = nullptr;
+    shared_ptr<int64_t> statusCode_ {};
+    shared_ptr<Darabonba::Http::SSEEvent> event_ {};
   };
 
   } // namespace Models

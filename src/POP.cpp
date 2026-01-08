@@ -34,12 +34,12 @@ void POP::modifyConfiguration(InterceptorContext &context,
          {"message" , "'config' or 'request' can not be unset"}
      }));
   }
-  InterceptorContextRequest request = context.request();
-  InterceptorContextConfiguration config = context.configuration();
-  config.setEndpoint(getEndpoint(request.productId(), config.regionId(),
-                                 config.endpointRule(), config.network(),
-                                 config.suffix(), config.endpointMap(),
-                                 config.endpoint()));
+  InterceptorContextRequest request = context.getRequest();
+  InterceptorContextConfiguration config = context.getConfiguration();
+  config.setEndpoint(getEndpoint(request.getProductId(), config.getRegionId(),
+                                 config.getEndpointRule(), config.getNetwork(),
+                                 config.getSuffix(), config.getEndpointMap(),
+                                 config.getEndpoint()));
 }
 
 void POP::modifyRequest(InterceptorContext &context,
@@ -50,128 +50,128 @@ void POP::modifyRequest(InterceptorContext &context,
                                    {"message" , "'config' or 'request' can not be unset"}
                                }));
   }
-  InterceptorContextRequest request = context.request();
-  InterceptorContextConfiguration config = context.configuration();
+  InterceptorContextRequest request = context.getRequest();
+  InterceptorContextConfiguration config = context.getConfiguration();
   auto date = Utils::getTimestamp();
   request.setHeaders(Darabonba::Core::merge(
-                         Darabonba::Json({{"host", config.endpoint()},
-                                          {"x-acs-version", request.version()},
-                                          {"x-acs-action", request.action()},
-                                          {"user-agent", request.userAgent()},
+                         Darabonba::Json({{"host", config.getEndpoint()},
+                                          {"x-acs-version", request.getVersion()},
+                                          {"x-acs-action", request.getAction()},
+                                          {"user-agent", request.getUserAgent()},
                                           {"x-acs-date", date},
                                           {"x-acs-signature-nonce",
                                            Utils::getNonce()},
                                           {"accept", "application/json"}}),
-                         request.headers())
+                         request.getHeaders())
                          .get<std::map<std::string, std::string>>());
 
   std::string signatureAlgorithm =
-      Darabonba::Convert::stringVal(Darabonba::defaultVal(request.signatureAlgorithm(), _sha256));
+      Darabonba::Convert::stringVal(Darabonba::defaultVal(request.getSignatureAlgorithm(), _sha256));
   std::string hashedRequestPayload =
       Darabonba::Encode::Encoder::hexEncode(Darabonba::Encode::Encoder::hash(
           Darabonba::BytesUtil::toBytes(""), signatureAlgorithm));
-  // if (!Darabonba::Util::isUnset(request.stream())) {
+  // if (!Darabonba::Util::isUnset(request.getStream())) {
   if (request.hasStream()) {
-    auto tmp = Darabonba::Stream::readAsBytes(request.stream());
+    auto tmp = Darabonba::Stream::readAsBytes(request.getStream());
     hashedRequestPayload = Darabonba::Encode::Encoder::hexEncode(
         Darabonba::Encode::Encoder::hash(tmp, signatureAlgorithm));
     request.setStream(std::make_shared<Darabonba::ISStream>(tmp));
-    request.headers()["content-type"] = "application/octet-stream";
+    request.getHeaders()["content-type"] = "application/octet-stream";
   } else {
-    // if (!Darabonba::Util::isUnset(request.body())) {
+    // if (!Darabonba::Util::isUnset(request.getBody())) {
     if (request.hasBody()) {
-      if (request.reqBodyType() == "json") {
-        string jsonObj = request.body().dump();
+      if (request.getReqBodyType() == "json") {
+        string jsonObj = request.getBody().dump();
         hashedRequestPayload = Darabonba::Encode::Encoder::hexEncode(
             Darabonba::Encode::Encoder::hash(Darabonba::BytesUtil::toBytes(jsonObj),
                                              signatureAlgorithm));
         request.setStream(std::make_shared<Darabonba::ISStream>(jsonObj));
-        request.headers()["content-type"] = "application/json; charset=utf-8";
+        request.getHeaders()["content-type"] = "application/json; charset=utf-8";
       } else {
-        json m = json(request.body());
+        json m = json(request.getBody());
         auto formObj = Utils::toForm(m);
         hashedRequestPayload = Darabonba::Encode::Encoder::hexEncode(
             Darabonba::Encode::Encoder::hash(Darabonba::BytesUtil::toBytes(formObj),
                                              signatureAlgorithm));
         request.setStream(std::make_shared<Darabonba::ISStream>(formObj));
-        request.headers()["content-type"] = "application/x-www-form-urlencoded";
+        request.getHeaders()["content-type"] = "application/x-www-form-urlencoded";
       }
     }
   }
 
   if (signatureAlgorithm == _sm3) {
-    request.headers()["x-acs-content-sm3"] = hashedRequestPayload;
+    request.getHeaders()["x-acs-content-sm3"] = hashedRequestPayload;
   } else {
-    request.headers()["x-acs-content-sha256"] = hashedRequestPayload;
+    request.getHeaders()["x-acs-content-sha256"] = hashedRequestPayload;
   }
 
-  if (request.authType() != "Anonymous") {
-    auto credential = request.credential();
+  if (request.getAuthType() != "Anonymous") {
+    auto credential = request.getCredential();
     auto accessKeyId = credential->getAccessKeyId();
     auto accessKeySecret = credential->getAccessKeySecret();
     auto securityToken = credential->getSecurityToken();
     if (!securityToken.empty()) {
-      request.headers()["x-acs-accesskey-id"] = accessKeyId;
-      request.headers()["x-acs-security-token"] = securityToken;
+      request.getHeaders()["x-acs-accesskey-id"] = accessKeyId;
+      request.getHeaders()["x-acs-security-token"] = securityToken;
     }
 
     auto dateNew = Darabonba::String::subString(date, 0, 10);
     dateNew = Darabonba::String::replace(dateNew, "-", "");
-    auto region = getRegion(request.productId(), config.endpoint());
+    auto region = getRegion(request.getProductId(), config.getEndpoint());
     auto signingkey = getSigningkey(signatureAlgorithm, accessKeySecret,
-                                    request.productId(), region, dateNew);
-    request.headers()["Authorization"] = getAuthorization(
-        request.pathname(), request.method(), request.query(),
-        request.headers(), signatureAlgorithm, hashedRequestPayload,
-        accessKeyId, signingkey, request.productId(), region, dateNew);
+                                    request.getProductId(), region, dateNew);
+    request.getHeaders()["Authorization"] = getAuthorization(
+        request.getPathname(), request.getMethod(), request.getQuery(),
+        request.getHeaders(), signatureAlgorithm, hashedRequestPayload,
+        accessKeyId, signingkey, request.getProductId(), region, dateNew);
   }
 }
 
 void POP::modifyResponse(InterceptorContext &context,
                          AttributeMap &attributeMap) {
-  auto request = context.request();
-  auto response = context.response();
-  if ((response.statusCode() >= 400) && (response.statusCode() < 600)) {
-    auto _res = Darabonba::Stream::readAsJSON(response.body());
+  auto request = context.getRequest();
+  auto response = context.getResponse();
+  if ((response.getStatusCode() >= 400) && (response.getStatusCode() < 600)) {
+    auto _res = Darabonba::Stream::readAsJSON(response.getBody());
     json err = json(_res);
     Darabonba::Json requestId = Darabonba::defaultVal(err.value("RequestId", ""), err.value("requestId", ""));
     Darabonba::Json code = Darabonba::defaultVal(err.value("Code", ""), err.value("code", ""));
-    // if (!Darabonba::Util::isUnset(response.headers()["x-acs-request-id"])) {
-    if (response.headers().count("x-acs-request-id")) {
-      requestId = response.headers()["x-acs-request-id"];
+    // if (!Darabonba::Util::isUnset(response.getHeaders()["x-acs-request-id"])) {
+    if (response.getHeaders().count("x-acs-request-id")) {
+      requestId = response.getHeaders()["x-acs-request-id"];
     }
 
-    err["statusCode"] = response.statusCode();
+    err["statusCode"] = response.getStatusCode();
     throw ClientException(json({
-         {"statusCode" , response.statusCode()},
+         {"statusCode" , response.getStatusCode()},
          {"code" , DARA_STRING_TEMPLATE("" , code)},
-         {"message" , DARA_STRING_TEMPLATE("code: " , response.statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
+         {"message" , DARA_STRING_TEMPLATE("code: " , response.getStatusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
          {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
          {"data" , err},
          {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
      }));
   }
 
-  if (response.statusCode() == 204) {
-    Darabonba::Stream::readAsString(response.body());
-  } else if (request.bodyType() == "binary") {
-    response.setBody(response.body());
-  } else if (request.bodyType() == "byte") {
-    auto byt = Darabonba::Stream::readAsBytes(response.body());
+  if (response.getStatusCode() == 204) {
+    Darabonba::Stream::readAsString(response.getBody());
+  } else if (request.getBodyType() == "binary") {
+    response.setBody(response.getBody());
+  } else if (request.getBodyType() == "byte") {
+    auto byt = Darabonba::Stream::readAsBytes(response.getBody());
     response.setDeserializedBody(byt);
-  } else if (request.bodyType() == "string") {
-    auto str = Darabonba::Stream::readAsString(response.body());
+  } else if (request.getBodyType() == "string") {
+    auto str = Darabonba::Stream::readAsString(response.getBody());
     response.setDeserializedBody(str);
-  } else if (request.bodyType() == "json") {
-    auto obj = Darabonba::Stream::readAsJSON(response.body());
+  } else if (request.getBodyType() == "json") {
+    auto obj = Darabonba::Stream::readAsJSON(response.getBody());
     auto res = json(obj);
     response.setDeserializedBody(res);
-  } else if (request.bodyType() == "array") {
-    auto arr = Darabonba::Stream::readAsJSON(response.body());
+  } else if (request.getBodyType() == "array") {
+    auto arr = Darabonba::Stream::readAsJSON(response.getBody());
     response.setDeserializedBody(arr);
   } else {
     response.setDeserializedBody(
-        Darabonba::Stream::readAsString(response.body()));
+        Darabonba::Stream::readAsString(response.getBody()));
   }
 }
 
