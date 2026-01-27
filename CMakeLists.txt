@@ -103,7 +103,6 @@ write_basic_package_version_file(
 )
 
 # 4. 生成主 Config 文件 (使用你指定的 .in 文件)
-# 请确保你的文件确实在 cmake/ 目录下，如果是在根目录，请去掉前面的 cmake/
 configure_package_config_file(
     "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
