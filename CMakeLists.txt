@@ -6,6 +6,8 @@ project(alibabacloud_open_api_v2 VERSION "1.0.0")
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 选项与全局设置 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(BUILD_UNIT_TESTS "Build unit tests" OFF)
+option(ENABLE_UNIT_TESTS "Enable unit tests" OFF)
 
 # C++ 标准设置：兼容 C++11 及以上，支持外部 -DCMAKE_CXX_STANDARD=20
 if(NOT CMAKE_CXX_STANDARD)
@@ -16,6 +18,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 静态库必须开启，否则无法被动态库链接
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# Prefer static libraries when BUILD_SHARED_LIBS=OFF
+if(NOT BUILD_SHARED_LIBS)
+  set(OPENSSL_USE_STATIC_LIBS ON)
+  set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+endif()
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 目标提前定义 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
