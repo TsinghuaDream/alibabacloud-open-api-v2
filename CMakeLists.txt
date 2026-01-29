@@ -5,7 +5,7 @@ project(alibabacloud_open_api_v2 VERSION "1.0.0")
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 选项与全局设置 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(BUILD_UNIT_TESTS "Build unit tests" OFF)
 option(ENABLE_UNIT_TESTS "Enable unit tests" OFF)
 
