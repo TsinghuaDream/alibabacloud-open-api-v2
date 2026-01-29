@@ -46,9 +46,6 @@ add_subdirectory(external)
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 路径与链接设置 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
-# 自动搜集头文件用于安装
-file(GLOB_RECURSE PUBLIC_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
-
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -76,7 +73,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
     OUTPUT_NAME "${PROJECT_NAME}"
     DEBUG_POSTFIX "_d"
-    PUBLIC_HEADER "${PUBLIC_HEADERS}"
     MACOSX_RPATH ON
 )
 
