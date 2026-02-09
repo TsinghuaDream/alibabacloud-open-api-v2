@@ -171,3 +171,27 @@ install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
     DESTINATION ${INSTALL_CMAKEDIR}
 )
+
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Unit Tests >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
+if(ENABLE_UNIT_TESTS OR BUILD_UNIT_TESTS)
+  enable_testing()
+  
+  # Find GoogleTest
+  find_package(GTest REQUIRED)
+  include(GoogleTest)
+  
+  # Test executable
+  add_executable(test_exception_fields tests/test_exception_fields.cpp)
+  
+  target_link_libraries(test_exception_fields
+      PRIVATE
+          ${PROJECT_NAME}
+          GTest::GTest
+          GTest::Main
+  )
+  
+  # Discover tests
+  gtest_discover_tests(test_exception_fields)
+  
+  message(STATUS "Unit tests enabled")
+endif()

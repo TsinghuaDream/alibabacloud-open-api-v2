@@ -15,6 +15,17 @@ namespace Exceptions
     friend void from_json(const Darabonba::Json& j, ThrottlingException& obj) { 
       DARABONBA_PTR_FROM_JSON(retryAfter, retryAfter_);
     };
+    
+    // Override to_json to include retryAfter
+    friend void to_json(Darabonba::Json& j, const ThrottlingException& obj) {
+      // Call parent to_json
+      to_json(j, static_cast<const AlibabaCloudException&>(obj));
+      // Add retryAfter field
+      if (obj.retryAfter_) {
+        j["retryAfter"] = *obj.retryAfter_;
+      }
+    };
+    
     ThrottlingException() ;
     ThrottlingException(const ThrottlingException &) = default ;
     ThrottlingException(ThrottlingException &&) = default ;
