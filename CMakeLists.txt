@@ -71,14 +71,13 @@ find_package(CURL REQUIRED)
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Target Setup >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 set(SOURCE_FILES
     src/Client.cpp
-    src/Utils.cpp
-    src/POP.cpp
+        src/Utils.cpp
 )
 
 # Create library target
 add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
-# Add external dependencies
+# Add external dependencies (darabonba-core, credentials)
 add_subdirectory(external)
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Include & Link >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
@@ -96,6 +95,7 @@ target_link_libraries(${PROJECT_NAME}
         OpenSSL::Crypto
         darabonba_core
         alibabacloud_credentials
+            
 )
 
 # Windows compatibility
@@ -171,27 +171,3 @@ install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
     DESTINATION ${INSTALL_CMAKEDIR}
 )
-
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Unit Tests >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
-if(ENABLE_UNIT_TESTS OR BUILD_UNIT_TESTS)
-  enable_testing()
-  
-  # Find GoogleTest
-  find_package(GTest REQUIRED)
-  include(GoogleTest)
-  
-  # Test executable
-  add_executable(test_exception_fields tests/test_exception_fields.cpp)
-  
-  target_link_libraries(test_exception_fields
-      PRIVATE
-          ${PROJECT_NAME}
-          GTest::GTest
-          GTest::Main
-  )
-  
-  # Discover tests
-  gtest_discover_tests(test_exception_fields)
-  
-  message(STATUS "Unit tests enabled")
-endif()

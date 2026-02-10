@@ -13,27 +13,26 @@ namespace Exceptions
 {
   class AlibabaCloudException : public Darabonba::ResponseException {
   public:
+    friend void to_json(Darabonba::Json& j, const AlibabaCloudException& obj) { 
+      // Serialize base class fields
+      to_json(j, static_cast<const Darabonba::ResponseException&>(obj));
+      // Serialize derived class fields
+      DARABONBA_PTR_TO_JSON(statusCode, statusCode_);
+      DARABONBA_PTR_TO_JSON(code, code_);
+      DARABONBA_PTR_TO_JSON(message, message_);
+      DARABONBA_PTR_TO_JSON(description, description_);
+      DARABONBA_PTR_TO_JSON(requestId, requestId_);
+    };
     friend void from_json(const Darabonba::Json& j, AlibabaCloudException& obj) { 
-      // Parent class ResponseException already handles these fields
-      // Just extract requestId which is specific to AlibabaCloud
-      if (j.contains("requestId") && !j["requestId"].is_null()) {
-        obj.requestId_ = j["requestId"].get<std::string>();
-      }
+      // Deserialize base class fields
+      from_json(j, static_cast<Darabonba::ResponseException&>(obj));
+      // Deserialize derived class fields
+      DARABONBA_PTR_FROM_JSON(statusCode, statusCode_);
+      DARABONBA_PTR_FROM_JSON(code, code_);
+      DARABONBA_PTR_FROM_JSON(message, message_);
+      DARABONBA_PTR_FROM_JSON(description, description_);
+      DARABONBA_PTR_FROM_JSON(requestId, requestId_);
     };
-    
-    // Override parent's to_json to include statusCode and requestId
-    friend void to_json(Darabonba::Json& j, const AlibabaCloudException& obj) {
-      j = Darabonba::Json{
-        {"code", obj.code_},
-        {"message", obj.message_},
-        {"data", obj.data_},
-        {"description", obj.description_},
-        {"accessDeniedDetail", obj.accessDeniedDetail_},
-        {"statusCode", obj.statusCode_},
-        {"requestId", obj.requestId_}
-      };
-    };
-    
     AlibabaCloudException() ;
     AlibabaCloudException(const AlibabaCloudException &) = default ;
     AlibabaCloudException(AlibabaCloudException &&) = default ;
@@ -41,17 +40,22 @@ namespace Exceptions
     virtual ~AlibabaCloudException() = default ;
     AlibabaCloudException& operator=(const AlibabaCloudException &) = default ;
     AlibabaCloudException& operator=(AlibabaCloudException &&) = default ;
-    
-    // Use parent class getters for inherited fields
-    inline int64_t statusCode() const { return getStatusCode(); };
-    inline string code() const { return getCode(); };
-    inline string message() const { return getMessage(); };
-    inline string description() const { return getDescription(); };
-    inline string requestId() const { return requestId_; };
-    
+    inline int64_t statusCode() const { DARABONBA_PTR_GET_DEFAULT(statusCode_, 0) };
+    inline string code() const { DARABONBA_PTR_GET_DEFAULT(code_, "") };
+    inline string message() const { DARABONBA_PTR_GET_DEFAULT(message_, "") };
+    inline string description() const { DARABONBA_PTR_GET_DEFAULT(description_, "") };
+    inline string requestId() const { DARABONBA_PTR_GET_DEFAULT(requestId_, "") };
   protected:
-    // Only requestId is specific to AlibabaCloud (other fields come from parent)
-    std::string requestId_;
+    // HTTP Status Code
+    shared_ptr<int64_t> statusCode_ {};
+    // Error Code
+    shared_ptr<string> code_ {};
+    // Error Message
+    shared_ptr<string> message_ {};
+    // Error Description
+    shared_ptr<string> description_ {};
+    // Request ID
+    shared_ptr<string> requestId_ {};
   };
   
   } // namespace Exceptions
