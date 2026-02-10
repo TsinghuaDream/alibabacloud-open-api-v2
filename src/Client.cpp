@@ -2,7 +2,7 @@
 #include <alibabacloud/Openapi.hpp>
 #include <alibabacloud/Utils.hpp>
 #include <map>
-#include <alibabacloud/credential/Client.hpp>
+#include <alibabacloud/credentials/Client.hpp>
 #include <darabonba/Runtime.hpp>
 #include <darabonba/policy/Retry.hpp>
 #include <darabonba/Exception.hpp>
