@@ -8,7 +8,7 @@
 #include <darabonba/Runtime.hpp>
 #include <alibabacloud/gateway/SPI.hpp>
 #include <map>
-#include <alibabacloud/credentials/Client.hpp>
+#include <alibabacloud/credential/Client.hpp>
 #include <darabonba/policy/Retry.hpp>
 using namespace std;
 using json = nlohmann::json;

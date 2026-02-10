@@ -14,9 +14,6 @@ namespace Exceptions
   class AlibabaCloudException : public Darabonba::ResponseException {
   public:
     friend void to_json(Darabonba::Json& j, const AlibabaCloudException& obj) { 
-      // Serialize base class fields
-      to_json(j, static_cast<const Darabonba::ResponseException&>(obj));
-      // Serialize derived class fields
       DARABONBA_PTR_TO_JSON(statusCode, statusCode_);
       DARABONBA_PTR_TO_JSON(code, code_);
       DARABONBA_PTR_TO_JSON(message, message_);
@@ -24,9 +21,6 @@ namespace Exceptions
       DARABONBA_PTR_TO_JSON(requestId, requestId_);
     };
     friend void from_json(const Darabonba::Json& j, AlibabaCloudException& obj) { 
-      // Deserialize base class fields
-      from_json(j, static_cast<Darabonba::ResponseException&>(obj));
-      // Deserialize derived class fields
       DARABONBA_PTR_FROM_JSON(statusCode, statusCode_);
       DARABONBA_PTR_FROM_JSON(code, code_);
       DARABONBA_PTR_FROM_JSON(message, message_);
